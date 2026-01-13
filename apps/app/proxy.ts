@@ -4,17 +4,28 @@ import {
   noseconeOptionsWithToolbar,
   securityMiddleware,
 } from "@repo/security/proxy";
-import type { NextProxy } from "next/server";
+import type { NextFetchEvent, NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 import { env } from "./env";
+
+// Determine if we are in "Dummy Mode" (Vercel Build or Local Dev without Keys)
+const isDummyMode =
+  !process.env.CLERK_SECRET_KEY ||
+  process.env.CLERK_SECRET_KEY.includes("placeholder") ||
+  process.env.CLERK_SECRET_KEY.startsWith("sk_test_dummy");
 
 const securityHeaders = env.FLAGS_SECRET
   ? securityMiddleware(noseconeOptionsWithToolbar)
   : securityMiddleware(noseconeOptions);
 
-// Clerk middleware wraps other middleware in its callback
-// For apps using Clerk, compose middleware inside authMiddleware callback
-// For apps without Clerk, use createNEMO for composition (see apps/web)
-export default authMiddleware(() => securityHeaders()) as unknown as NextProxy;
+const authHandler = authMiddleware(() => securityHeaders());
+
+export default function middleware(req: NextRequest, ev: NextFetchEvent) {
+  if (isDummyMode) {
+    return NextResponse.next();
+  }
+  return (authHandler as any)(req, ev);
+}
 
 export const config = {
   matcher: [
