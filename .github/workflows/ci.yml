@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      
+      - name: Install Dependencies
+        run: |
+          if [ -f "package.json" ]; then
+            npm install -g pnpm
+            pnpm install --no-frozen-lockfile
+          else
+            echo "No package.json found. Skipping install for Stage 0."
+          fi
+      
+      # For Stage 0, we mainly check that we can install deps (if any).
+      # Since we don't have code yet, this is a placeholder build check.
+      - name: Build Check
+        run: echo "Stage 0 Build Check Passed"

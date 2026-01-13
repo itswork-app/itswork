@@ -1,0 +1,13 @@
+{
+  "name": "Cost Guard Dev",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:20",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "github.copilot",
+        "github.copilot-chat"
+      ]
+    }
+  },
+  "postCreateCommand": "npm install -g pnpm && if [ -f package.json ]; then pnpm install; fi"
+}
