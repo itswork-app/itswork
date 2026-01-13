@@ -18,9 +18,12 @@ const RootLayout = ({ children }: RootLayoutProperties) => (
           helpUrl={env.NEXT_PUBLIC_DOCS_URL}
           privacyUrl={new URL(
             "/legal/privacy",
-            env.NEXT_PUBLIC_WEB_URL
+            env.NEXT_PUBLIC_WEB_URL || "http://localhost:3000"
           ).toString()}
-          termsUrl={new URL("/legal/terms", env.NEXT_PUBLIC_WEB_URL).toString()}
+          termsUrl={new URL(
+            "/legal/terms",
+            env.NEXT_PUBLIC_WEB_URL || "http://localhost:3000"
+          ).toString()}
         >
           {children}
         </DesignSystemProvider>
