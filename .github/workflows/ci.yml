@@ -17,7 +17,13 @@ jobs:
           node-version: 20
       
       - name: Install Dependencies
-        run: npm install -g pnpm && pnpm install --no-frozen-lockfile
+        run: |
+          if [ -f "package.json" ]; then
+            npm install -g pnpm
+            pnpm install --no-frozen-lockfile
+          else
+            echo "No package.json found. Skipping install for Stage 0."
+          fi
       
       # For Stage 0, we mainly check that we can install deps (if any).
       # Since we don't have code yet, this is a placeholder build check.

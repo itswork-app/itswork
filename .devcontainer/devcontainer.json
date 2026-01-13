@@ -9,5 +9,5 @@
       ]
     }
   },
-  "postCreateCommand": "npm install -g pnpm && pnpm install"
+  "postCreateCommand": "npm install -g pnpm && if [ -f package.json ]; then pnpm install; fi"
 }
