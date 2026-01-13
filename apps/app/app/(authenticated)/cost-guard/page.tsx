@@ -22,12 +22,14 @@ export const metadata: Metadata = {
 
 export default function CostGuardPage() {
   return (
-    <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-      <div className="flex flex-col space-y-2 pb-4">
+    <div className="flex flex-1 flex-col gap-6 p-6">
+      {/* Page Header */}
+      <div className="flex flex-col gap-1">
         <h1 className="text-3xl font-bold tracking-tight">Cost Guard</h1>
         <p className="text-muted-foreground">Monitor and control your AI/RPC usage.</p>
       </div>
 
+      {/* KPI Cards */}
       <div className="grid gap-4 md:grid-cols-3">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -36,7 +38,7 @@ export default function CostGuardPage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">$1,234.56</div>
+            <p className="text-3xl font-bold tracking-tight">$1,234.56</p>
           </CardContent>
         </Card>
         <Card>
@@ -46,7 +48,7 @@ export default function CostGuardPage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">$2,000.00</div>
+            <p className="text-3xl font-bold tracking-tight">$2,000.00</p>
           </CardContent>
         </Card>
         <Card>
@@ -56,12 +58,21 @@ export default function CostGuardPage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-green-600">$765.44</div>
+            <p className="text-3xl font-bold tracking-tight text-green-600">$765.44</p>
           </CardContent>
         </Card>
       </div>
 
-      <Card className="col-span-3">
+      {/* Status Section */}
+      <Card>
+        <CardContent className="flex items-center gap-3 py-4">
+          <Badge className="bg-green-100 text-green-800 hover:bg-green-100">PASS</Badge>
+          <p className="text-sm text-muted-foreground">All systems operational. Budget within limits.</p>
+        </CardContent>
+      </Card>
+
+      {/* Events Table */}
+      <Card>
         <CardHeader>
           <CardTitle>Cost Events</CardTitle>
         </CardHeader>
