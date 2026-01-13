@@ -1,10 +1,11 @@
-const { execSync } = require("node:child_process");
+/**
+ * apps/web Vercel Build Skip Script
+ *
+ * This app is not the active product (Cost Guard is in apps/app).
+ * The web app requires BASEHUB_TOKEN for CMS which is not configured.
+ * Always skip Vercel builds until this is ready for production.
+ */
 
-const commitMessage = execSync("git log -1 --pretty=%B").toString().trim();
-
-if (commitMessage.includes("[skip ci]")) {
-  console.log("Skipping build due to [skip ci] in commit message.");
-  process.exit(0); // this causes Vercel to skip the build
-}
-
-process.exit(1); // continue with build
+console.log("Skipping apps/web build - not active product");
+console.log("Active product: Cost Guard (apps/app)");
+process.exit(0); // Exit 0 = skip build in Vercel
