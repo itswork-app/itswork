@@ -11,8 +11,7 @@ import {
   NavigationMenuTrigger,
 } from "@repo/design-system/components/ui/navigation-menu";
 import type { Dictionary } from "@repo/internationalization";
-import { CommandIcon, Menu, MoveRight, X } from "lucide-react";
-import Image from "next/image";
+import { Menu, MoveRight, X } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { env } from "@/env";
@@ -138,13 +137,11 @@ export const Header = ({ dictionary }: HeaderProps) => {
             <ModeToggle />
           </div>
           <Button asChild className="hidden md:inline" variant="outline">
-            <Link href={`${env.NEXT_PUBLIC_APP_URL}/sign-in`}>
-              {dictionary.web.header.signIn}
-            </Link>
+            <Link href="https://dashboard.itswork.app/sign-in">Login</Link>
           </Button>
           <Button asChild>
-            <Link href={`${env.NEXT_PUBLIC_APP_URL}/sign-up`}>
-              {dictionary.web.header.signUp}
+            <Link href="https://dashboard.itswork.app/sign-up">
+              Get Started
             </Link>
           </Button>
         </div>
