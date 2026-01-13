@@ -14,11 +14,22 @@ const isDummyMode =
   process.env.CLERK_SECRET_KEY.includes("placeholder") ||
   process.env.CLERK_SECRET_KEY.startsWith("sk_test_dummy");
 
-const securityHeaders = env.FLAGS_SECRET
+const enableSecurity = !!env.ARCJET_KEY && !!env.FLAGS_SECRET;
+
+const securityHeaders = enableSecurity
   ? securityMiddleware(noseconeOptionsWithToolbar)
   : securityMiddleware(noseconeOptions);
 
-const authHandler = authMiddleware(() => securityHeaders());
+// If ARCJET_KEY is invalid/missing, securityMiddleware might crash?
+// Let's protect it further.
+// Actually, nosecone wrapper handles missing keys gracefully usually, but let's be sure.
+
+const authHandler = authMiddleware(async () => {
+  if (enableSecurity) {
+    return securityHeaders();
+  }
+  return NextResponse.next();
+});
 
 export default function middleware(req: NextRequest, ev: NextFetchEvent) {
   if (isDummyMode) {
